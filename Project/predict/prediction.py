@@ -1,0 +1,10 @@
+from catboost import CatBoostRegressor
+import numpy 
+
+model = CatBoostRegressor()
+model.load_model("Project/model/model.cbm")
+
+def predict(input_df): 
+    # Make prediction
+    prediction = model.predict(input_df)
+    return prediction[0]  # Return the predicted value
