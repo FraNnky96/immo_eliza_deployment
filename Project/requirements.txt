@@ -2,4 +2,4 @@ streamlit
 pandas
 catboost
 joblib
-sklearn
+scikit-learn
