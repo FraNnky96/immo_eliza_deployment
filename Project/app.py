@@ -85,7 +85,7 @@ class PredictionApp:
 
 
 # Instantiate and run the app
-model_path = "model/model.cbm"
-scaler_path = "model/scaler.pkl"
+model_path = "Project/model/model.cbm"
+scaler_path = "Project/model/scaler.pkl"
 app = PredictionApp(model_path, scaler_path)
 app.run()
