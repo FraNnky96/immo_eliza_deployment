@@ -1,0 +1,6 @@
+[theme]
+primaryColor = "#1976D2"  # Blue primary color for buttons, sliders, etc.
+backgroundColor = "#E3F2FD"  # Light blue background
+secondaryBackgroundColor = "#ffffff"  # Dark blue for the sidebar
+textColor = "#1A237E"  # Dark blue text color
+font = "sans serif"  # Use sans-serif font

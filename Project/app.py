@@ -16,13 +16,18 @@ class PredictionApp:
             return "Locality must not be empty."
         if user_inputs["Bedrooms"] <= 0:
             return "Number of bedrooms must be at least 1."
+        if user_inputs["Zip code"] < 1000 or user_inputs["Zip code"] > 9999:
+            return "Zip code must be a 4-digit number."
         return None
 
     def run(self):
+        # Set up the page config early
+        st.set_page_config(layout="wide", page_title="House Price Prediction", page_icon=":house:")
+
         # Streamlit interface
         st.title("House Price Prediction")
         st.write("""
-            This application predicts house prices range based on various features.
+            This application predicts house prices based on various features.
             Enter the details below:
         """)
 
@@ -36,14 +41,14 @@ class PredictionApp:
         surface_of_the_plot = st.number_input("Surface of the plot in m²", min_value=0, step=1)
         facades = st.number_input("Facades", min_value=1, step=1)
         building_condition = st.selectbox("Building condition", ["Just renovated", "As new", "Good", "To be done up", "To renovate"])
-        fireplace = st.radio("Fireplace", ("No", "Yes"))
-        equipped_kitchen = st.radio("Equipped Kitchen", ["No", "Yes"])
-        garden = st.radio("Garden", ("No", "Yes"))
+        fireplace = st.radio("Fireplace", options=["No", "Yes"], horizontal=True)
+        equipped_kitchen = st.radio("Equipped Kitchen", options=["No", "Yes"], horizontal=True)
+        garden = st.radio("Garden", options=["No", "Yes"], horizontal=True)
         garden_surface = st.number_input("Garden surface in m²", min_value=0, step=1) if garden == "Yes" else 0
-        terrace = st.radio("Terrace", ("No", "Yes"))
+        terrace = st.radio("Terrace", options=["No", "Yes"], horizontal=True)
         terrace_surface = st.number_input("Terrace surface in m²", min_value=0, step=1) if terrace == "Yes" else 0
-        furnished = st.radio("Furnished", ("No", "Yes"))
-        swimming_pool = st.radio("Swimming pool", ("No", "Yes"))
+        furnished = st.radio("Furnished", options=["No", "Yes"], horizontal=True)
+        swimming_pool = st.radio("Swimming pool", options=["No", "Yes"], horizontal=True)
 
         # Collect all input data
         user_inputs = {
@@ -83,9 +88,8 @@ class PredictionApp:
             except Exception as e:
                 st.error(f"An error occurred during prediction: {e}")
 
-
 # Instantiate and run the app
-model_path = "Project/model/model.cbm"
-scaler_path = "Project/model/scaler.pkl"
+model_path = "model/model.cbm"  # Update with your model path
+scaler_path = "model/scaler.pkl"  # Update with your scaler path
 app = PredictionApp(model_path, scaler_path)
 app.run()
