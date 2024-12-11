@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import joblib 
 
+
 # Load the scaler used during training
 scaler = joblib.load('Project/model/scaler.pkl')
 
