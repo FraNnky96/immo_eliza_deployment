@@ -93,3 +93,4 @@ model_path = "Project/model/model.cbm"  # Update with your model path
 scaler_path = "Project/model/scaler.pkl"  # Update with your scaler path
 app = PredictionApp(model_path, scaler_path)
 app.run()
+
