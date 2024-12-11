@@ -1,10 +1,12 @@
 from catboost import CatBoostRegressor
 
+class PredictionModel:
+    def __init__(self, model_path):
+        # Initialize the CatBoost model
+        self.model = CatBoostRegressor()
+        self.model.load_model(model_path)
 
-model = CatBoostRegressor()
-model.load_model("Project/model/model.cbm")
-
-def predict(input_df): 
-    # Make prediction
-    prediction = model.predict(input_df)
-    return prediction[0]  # Return the predicted value
+    def predict(self, input_df):
+        # Make prediction
+        prediction = self.model.predict(input_df)
+        return prediction[0]  # Return the predicted value
