@@ -89,7 +89,7 @@ class PredictionApp:
                 st.error(f"An error occurred during prediction: {e}")
 
 # Instantiate and run the app
-model_path = "model/model.cbm"  # Update with your model path
-scaler_path = "model/scaler.pkl"  # Update with your scaler path
+model_path = "./model/model.cbm"  # Update with your model path
+scaler_path = "./model/scaler.pkl"  # Update with your scaler path
 app = PredictionApp(model_path, scaler_path)
 app.run()
