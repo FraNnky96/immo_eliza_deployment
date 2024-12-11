@@ -3,12 +3,13 @@ from predict.prediction import PredictionModel
 from preprocessing.cleaning_data import Preprocessing
 
 class PredictionApp:
-    def __init__(self, scaler_path, model_path):
-        # Initialize preprocessing and prediction classes
-        self.preprocessing = Preprocessing(scaler_path)
-        self.prediction_model = PredictionModel(model_path)
+    def __init__(self, model_path, scaler_path):
+        # Initialize the Preprocessing and PredictionModel classes
+        self.preprocessor = Preprocessing(scaler_path)
+        self.model = PredictionModel(model_path)
 
     def validate_inputs(self, user_inputs):
+        """Helper function for input validation"""
         if user_inputs["Living area"] <= 0:
             return "Living area must be a positive number."
         if not user_inputs["Locality"]:
@@ -17,15 +18,15 @@ class PredictionApp:
             return "Number of bedrooms must be at least 1."
         return None
 
-    def display_input_form(self):
+    def run(self):
+        # Streamlit interface
         st.title("House Price Prediction")
-
         st.write("""
             This application predicts house prices range based on various features.
             Enter the details below:
         """)
 
-        # Input fields for user input (same as before)
+        # Input fields for user input
         property_type = st.selectbox("Property type", ["House", "Apartment", "Villa", "Country Cottage", "Exceptional Property", "Mixed Use Building"])
         region = st.selectbox("Region", ["Brussels", "Wallonia", "Flanders"])
         locality = st.text_input("Locality")
@@ -65,36 +66,26 @@ class PredictionApp:
             "Region": region
         }
 
-        return user_inputs
+        # Button to trigger prediction
+        if st.button("Predict Price"):
+            # Validate inputs
+            error_message = self.validate_inputs(user_inputs)
+            if error_message:
+                st.error(error_message)
+                return  # Stop execution if there's an error
 
-    def run(self):
-        # Display the input form
-        user_inputs = self.display_input_form()
-
-        # Validate inputs
-        error_message = self.validate_inputs(user_inputs)
-        if error_message:
-            st.error(error_message)
-        else:
             # Process inputs for prediction
-            processed_input = self.preprocessing.process(user_inputs)
+            processed_input = self.preprocessor.process(user_inputs)
             try:
                 # Predict the price based on the processed input
-                prediction = self.prediction_model.predict(processed_input)
-                predicted_range_min = prediction * 0.90
-                predicted_range_max = prediction * 1.10
-                st.write(f"The predicted price range is: {predicted_range_min:,.2f}€ - {predicted_range_max:,.2f}€")
-                st.write("This is the estimated price range based on the provided property features.")
+                prediction = self.model.predict(processed_input)
+                st.write(f"The predicted price is: {prediction:,.2f}€")
             except Exception as e:
                 st.error(f"An error occurred during prediction: {e}")
 
 
-# Initialize the Streamlit app with paths to the model and scaler
-if __name__ == "__main__":
-    scaler_path = "Project/model/scaler.pkl"
-    model_path = "Project/model/model.cbm"
-    
-    app = PredictionApp(scaler_path, model_path)
-    app.run()
-
-
+# Instantiate and run the app
+model_path = "model/model.cbm"
+scaler_path = "model/scaler.pkl"
+app = PredictionApp(model_path, scaler_path)
+app.run()
