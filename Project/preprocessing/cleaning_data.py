@@ -3,7 +3,7 @@ import numpy as np
 import joblib 
 
 # Load the scaler used during training
-scaler = joblib.load('model/scaler.pkl')
+scaler = joblib.load('Project/model/scaler.pkl')
 
 def preprocess(user_inputs):
     # Preprocess input data (same as during training)
