@@ -4,14 +4,46 @@ from preprocessing.cleaning_data import Preprocessing
 
 
 class PredictionApp:
+    """
+    A class that handles the prediction of house prices based on user input.
+
+    Attributes:
+        preprocessor (Preprocessing): The preprocessing object responsible for transforming input data.
+        model (PredictionModel): The prediction model object that predicts the house price based on processed data.
+
+    Methods:
+        validate_inputs(user_inputs):
+            Validates the user input for required fields and value ranges.
+
+        run():
+            Runs the Streamlit app interface, collects user input, validates, processes the input,
+            and predicts the price using the model.
+    """
+
     def __init__(self, model_path, scaler_path):
-        # Initialize the Preprocessing and PredictionModel classes
+        """Initializes the app with the model and scaler paths.
+
+        Args:
+            model_path (str): Path to the trained prediction model.
+            scaler_path (str): Path to the scaler used for preprocessing input data.
+        """
+
         self.preprocessor = Preprocessing(scaler_path)
         self.model = PredictionModel(model_path)
 
     def validate_inputs(self, user_inputs):
-        """Helper function for input validation"""
+        """
+        Validates the user input for required fields and value ranges.
 
+        Args:
+            user_inputs (dict): A dictionary containing the user's input data, where keys are feature names and values are feature values.
+
+        Returns:
+            str: An error message if any input is invalid, otherwise None.
+
+        Raises:
+            ValueError: If an invalid value is encountered in the user inputs.
+        """
         if user_inputs["Living area"] <= 0:
             return "Living area must be a positive number."
         if not user_inputs["Locality"]:
@@ -23,6 +55,20 @@ class PredictionApp:
         return None
 
     def run(self):
+        """
+        Runs the Streamlit app interface. Collects user input, validates the input data,
+        processes it using the preprocessing steps, and predicts the house price.
+
+        This method handles the following:
+            - Displays the user input interface.
+            - Validates the user's inputs.
+            - Processes the inputs using the preprocessor.
+            - Predicts the house price using the trained model.
+            - Displays the prediction result or an error message if any issue occurs.
+
+        Returns:
+            None
+        """
         # Set up the page config early
         st.set_page_config(
             layout="wide", page_title="House Price Prediction", page_icon=":house:"
@@ -123,7 +169,7 @@ class PredictionApp:
 
 
 # Instantiate and run the app
-model_path = "Project/model/model.cbm"  # Update with your model path
-scaler_path = "Project/model/scaler.pkl"  # Update with your scaler path
+model_path = "Project/model/model.cbm"
+scaler_path = "Project/model/scaler.pkl"
 app = PredictionApp(model_path, scaler_path)
 app.run()
