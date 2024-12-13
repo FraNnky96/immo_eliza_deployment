@@ -2,6 +2,7 @@ import streamlit as st
 from predict.prediction import PredictionModel
 from preprocessing.cleaning_data import Preprocessing
 
+
 class PredictionApp:
     def __init__(self, model_path, scaler_path):
         # Initialize the Preprocessing and PredictionModel classes
@@ -10,6 +11,7 @@ class PredictionApp:
 
     def validate_inputs(self, user_inputs):
         """Helper function for input validation"""
+
         if user_inputs["Living area"] <= 0:
             return "Living area must be a positive number."
         if not user_inputs["Locality"]:
@@ -22,33 +24,64 @@ class PredictionApp:
 
     def run(self):
         # Set up the page config early
-        st.set_page_config(layout="wide", page_title="House Price Prediction", page_icon=":house:")
+        st.set_page_config(
+            layout="wide", page_title="House Price Prediction", page_icon=":house:"
+        )
 
         # Streamlit interface
         st.title("House Price Prediction")
-        st.write("""
+        st.write(
+            """
             This application predicts house prices based on various features.
             Enter the details below:
-        """)
+        """
+        )
 
         # Input fields for user input
-        property_type = st.selectbox("Property type", ["House", "Apartment", "Villa", "Country Cottage", "Exceptional Property", "Mixed Use Building"])
+        property_type = st.selectbox("Property type", ["House", "Apartment", "Villa"])
         region = st.selectbox("Region", ["Brussels", "Wallonia", "Flanders"])
         locality = st.text_input("Locality")
-        zip_code = st.number_input("Zip code", min_value=1000, max_value=9999, step=1)  # Restrict zip code range for Belgium
+        zip_code = st.number_input(
+            "Zip code", min_value=1000, max_value=9999, step=1
+        )  # Restrict zip code range for Belgium
         bedrooms = st.number_input("Bedrooms", min_value=1, step=1)
         living_area = st.number_input("Living area in m²", min_value=1, step=1)
-        surface_of_the_plot = st.number_input("Surface of the plot in m²", min_value=0, step=1)
+        surface_of_the_plot = st.number_input(
+            "Surface of the plot in m²", min_value=0, step=1
+        )
         facades = st.number_input("Facades", min_value=1, step=1)
-        building_condition = st.selectbox("Building condition", ["Just renovated", "As new", "Good", "To be done up", "To renovate"])
+        building_condition = st.selectbox(
+            "Building condition",
+            [
+                "Just renovated",
+                "As new",
+                "Good",
+                "To be done up",
+                "To renovate",
+                "To restore",
+                "Not mentioned",
+            ],
+        )
         fireplace = st.radio("Fireplace", options=["No", "Yes"], horizontal=True)
-        equipped_kitchen = st.radio("Equipped Kitchen", options=["No", "Yes"], horizontal=True)
+        equipped_kitchen = st.radio(
+            "Equipped Kitchen", options=["No", "Yes"], horizontal=True
+        )
         garden = st.radio("Garden", options=["No", "Yes"], horizontal=True)
-        garden_surface = st.number_input("Garden surface in m²", min_value=0, step=1) if garden == "Yes" else 0
+        garden_surface = (
+            st.number_input("Garden surface in m²", min_value=0, step=1)
+            if garden == "Yes"
+            else 0
+        )
         terrace = st.radio("Terrace", options=["No", "Yes"], horizontal=True)
-        terrace_surface = st.number_input("Terrace surface in m²", min_value=0, step=1) if terrace == "Yes" else 0
+        terrace_surface = (
+            st.number_input("Terrace surface in m²", min_value=0, step=1)
+            if terrace == "Yes"
+            else 0
+        )
         furnished = st.radio("Furnished", options=["No", "Yes"], horizontal=True)
-        swimming_pool = st.radio("Swimming pool", options=["No", "Yes"], horizontal=True)
+        swimming_pool = st.radio(
+            "Swimming pool", options=["No", "Yes"], horizontal=True
+        )
 
         # Collect all input data
         user_inputs = {
@@ -68,7 +101,7 @@ class PredictionApp:
             "Terrace surface": terrace_surface,
             "Furnished": furnished,
             "Swimming pool": swimming_pool,
-            "Region": region
+            "Region": region,
         }
 
         # Button to trigger prediction
@@ -88,9 +121,9 @@ class PredictionApp:
             except Exception as e:
                 st.error(f"An error occurred during prediction: {e}")
 
+
 # Instantiate and run the app
 model_path = "Project/model/model.cbm"  # Update with your model path
 scaler_path = "Project/model/scaler.pkl"  # Update with your scaler path
 app = PredictionApp(model_path, scaler_path)
 app.run()
-
