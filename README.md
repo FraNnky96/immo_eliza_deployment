@@ -1,6 +1,6 @@
-### Immo Eliza Deployement
+# Immo Eliza Deployement
 
-# Description
+## Description
 
 Deployement of the Immo Eliza project in an usable app with streamlit.
 
@@ -10,27 +10,27 @@ Deployement of the Immo Eliza project in an usable app with streamlit.
     - it also contain a "model" folder with the already trained model and scaler for the formating of the data
 
 
-# Installation
+## Installation
 
     - python -m venv env
     - pip install -r requirements.txt
 
-# Usage
+## Usage
 
-    Applicaction already deployed et : https://immoelizadeployment-fl.streamlit.app/
+    Applicaction already deployed et : [Link to app](https://immoelizadeployment-fl.streamlit.app/)
 
     or
 
     - pip install streamlit
     - streamlit run Project/app.py
 
-# Visuals
+## Visuals
 
 ![Screenshot](./visual/Application_visual1.PNG)
 ![Screenshot](./visual/Application_visual2.PNG)
 
 
-# Personal Throught 
+## Personal Throught 
 
     Hello! This is the final part of the Red Line Project at BeCode.
 
