@@ -26,8 +26,8 @@ Deployement of the Immo Eliza project in an usable app with streamlit.
 
 # Visuals
 
-![Image Alt Text](visual\Application_visual1.PNG)
-![Image Alt Text](visual\Application_visual2.PNG)
+![Screenshot](./visual/Application_visual1.PNG)
+![Screenshot](./visual/Application_visual2.PNG)
 
 
 # Personal Throught 
