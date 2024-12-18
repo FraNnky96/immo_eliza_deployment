@@ -4,7 +4,7 @@ import pandas as pd
 
 class PredictionModel:
     """
-    A class for loading a pre-trained CatBoost regression model and making predictions on input data.
+    A class for loading CatBoost regression model and making predictions on input data.
 
     This class provides the functionality to:
     - Load a trained CatBoost model from a specified file path.

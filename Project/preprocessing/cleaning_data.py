@@ -14,7 +14,7 @@ class Preprocessing:
     - Scaling numerical features using the pre-fitted scaler from the training phase.
 
     Attributes:
-        scaler (object): A pre-loaded scaler (e.g., StandardScaler) used to scale numerical features.
+        scaler (object): A pre-loaded scaler (RobustScaler) used to scale numerical features.
 
     Methods:
         process(user_inputs):
